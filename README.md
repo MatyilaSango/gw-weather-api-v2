@@ -1,4 +1,4 @@
-# weather-api-v2
+# gw-weather-api-v2
 A weather API that provides the weather data in the form of a JSON file.
 
 ## Home page
