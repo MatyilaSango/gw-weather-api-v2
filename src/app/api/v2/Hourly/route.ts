@@ -8,6 +8,6 @@ export async function POST(req: NextRequest) {
   let hourly: hourlyDataType = (await hourlyHandler(
     parameter
   )) as hourlyDataType;
-  if (hourly) NextResponse.json(hourly);
+  if (hourly) return NextResponse.json(hourly);
   return NextResponse.json({ error: Data.NOT_FOUND });
 }

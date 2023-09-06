@@ -8,6 +8,6 @@ export async function POST(req: NextRequest) {
   let locations: Locations = new Locations();
   await locations.scrapLocations(parameter);
   let res: locationsType = locations.getLocations();
-  if (res) NextResponse.json(res);
+  if (res) return NextResponse.json(res);
   return NextResponse.json({ error: Data.NOT_FOUND });
 }

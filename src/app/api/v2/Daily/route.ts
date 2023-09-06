@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     parameter,
     day
   )) as dailyDataType;
-  if (daily) NextResponse.json(daily);
+  if (daily) return NextResponse.json(daily);
   return NextResponse.json({
     error:
       "Location's weather data not found, try use the Locations end point to get proper location name!",
