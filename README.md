@@ -24,8 +24,8 @@ Body: ```{ "parameter": "Your location" }``` <br>
 ##
 
 Daily Weather data <br>
-End point: ```/api/v2/daily/location/day```
-Body: ```{ "parameter": "Your location", "day": 0 }```
+End point: ```/api/v2/daily/location/day``` <br>
+Body: ```{ "parameter": "Your location", "day": 0 }``` <br>
 0 - being the current day, 1 - being the next day after today, etc,
 
 ## Deployed on vercel
