@@ -5,31 +5,31 @@ A weather API that provides the weather data in the form of a JSON file.
 Confirms that the api is running.
 
 ## Commands
-```/api/v2``` - Home page.
+```/api/v2``` - Home page. <br>
 ##
 
-Locations data
-End point: ```/api/v2/today```
-Body: ```{"parameter": "Your location"}```
+Locations data <br>
+End point: ```/api/v2/today``` <br>
+Body: ```{"parameter": "Your location"}``` <br>
 ##
 
-Today's data.
-End point: ```/api/v2/today```
-Body: ```{"parameter": "Your location"}```
+Today's data. <br>
+End point: ```/api/v2/today``` <br>
+Body: ```{"parameter": "Your location"}``` <br>
 ##
 
-Hourly data for the next 10 hours max
-End point: ```/api/v2/hourly/location``` 
-Body: ```{"parameter": "Your location"}```
+Hourly data for the next 10 hours max <br>
+End point: ```/api/v2/hourly/location``` <br>
+Body: ```{"parameter": "Your location"}``` <br>
 ##
 
-Daily Weather data
+Daily Weather data <br>
 End point: ```/api/v2/daily/location/day```
-Body: ```{
-            "parameter": "Your location", 
-            "day": 0
-          }
-      ```
+Body: ```{<br>
+            "parameter": "Your location", <br>
+            "day": 0<br>
+          }<br>
+      ```<br>
 0 - being the current day, 1 - being the next day after today, etc,
 
 ## Deployed on vercel
