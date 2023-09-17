@@ -47,8 +47,9 @@ export class Daily {
     search: string,
     day: string | any
   ): Promise<void> => {
-    if (this.isFreshData(getDaily(search, day), day)) {
-      this._dailyData = getDaily(search, day);
+    let data: dailyDataType = this.getData(search, day)
+    if (this.isFreshData(data, day)) {
+      this._dailyData = data;
     } else {
       let hourlyLink = await axios
         .get(`https://www.accuweather.com/en/search-locations?query=${search}`)
@@ -74,21 +75,7 @@ export class Daily {
 
       //Scrapping the day and night data.
       $(".half-day-card").each(function (this: any) {
-        let tempDayNightData: dataType = {
-          title: "",
-          temperature: "",
-          real_feel: "",
-          real_feel_shade: "",
-          phrase: "",
-          max_uv_index: "",
-          wind: "",
-          wind_gusts: "",
-          prob_of_precip: "",
-          prob_of_thunderstorm: "",
-          precip: "",
-          cloud_cover: "",
-          icon: "",
-        };
+        let tempDayNightData: dataType = new DailyModel().model.data.day_night.day;
 
         tempDayNightData.title = $(this).find(".title").text().trim();
         tempDayNightData.temperature = String(

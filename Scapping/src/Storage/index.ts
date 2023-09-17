@@ -20,7 +20,7 @@ export const getToday = (location: string): todayDataType => {
 };
 
 export const deleteToday = (location: string): void => {
-  todayData.filter((today_) => !today_.search_parameter.includes(location));
+  todayData = todayData.filter((today_) => !today_.search_parameter.includes(location));
 };
 
 //hourly getter and setter
@@ -35,7 +35,7 @@ export const getHourly = (location: string): hourlyDataType => {
 };
 
 export const deleteHourly = (location: string): void => {
-  hourlyData.filter((hourly_) => !hourly_.search_parameter.includes(location));
+  hourlyData = hourlyData.filter((hourly_) => !hourly_.search_parameter.includes(location));
 };
 
 //daily getter and setter
@@ -54,7 +54,6 @@ const formatDateNow = (day: string): String => {
 };
 
 export const getDaily = (location: string, day: string): dailyDataType => {
-  let date_now: String = formatDateNow(day);
   return dailyData.filter((daily_) =>
     daily_.search_parameter.includes(location)
   )[0];

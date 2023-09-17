@@ -26,8 +26,9 @@ export class Hourly {
   };
 
   public scrapHourly = async (search: string): Promise<void> => {
-    if (this.isFreshData(getHourly(search))) {
-      this._hourlyData = getHourly(search);
+    let data: hourlyDataType = this.getData(search)
+    if (this.isFreshData(data)) {
+      this._hourlyData = data;
     } else {
       let hourlyLink = await axios
         .get(`https://www.accuweather.com/en/search-locations?query=${search}`)

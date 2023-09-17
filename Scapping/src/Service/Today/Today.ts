@@ -24,8 +24,9 @@ export class Today {
   };
 
   public scrapToday = async (search: string): Promise<void> => {
-    if (getToday(search) && this.isFreshData(getToday(search))) {
-      this._data_by_location = getToday(search);
+    let data: todayDataType = this.getData(search)
+    if (data && this.isFreshData(data)) {
+      this._data_by_location = data;
     } else {
       let response = await axios
         .get(`https://www.accuweather.com/en/search-locations?query=${search}`)
