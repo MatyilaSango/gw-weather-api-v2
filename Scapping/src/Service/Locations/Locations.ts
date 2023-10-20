@@ -1,7 +1,7 @@
-import axios from "axios";
 import cheerio from "cheerio";
 import { locationsType } from "../../../../Types/types";
 import LocationModel from "../../Models/Location";
+import getRootHTMLPage from "../../Addon/RootPage/RootPage";
 
 export class Locations {
   private _locations: locationsType = new LocationModel().model;
@@ -10,9 +10,7 @@ export class Locations {
 
   public scrapLocations = async (search: string): Promise<void> => {
     this._locations.search_parameter = search;
-    let response = await axios
-      .get(`https://www.accuweather.com/en/search-locations?query=${search}`)
-      .then((prom) => prom.data)
+    let response = await getRootHTMLPage(search)
       .then((results) => results);
 
     let $ = cheerio.load(response);

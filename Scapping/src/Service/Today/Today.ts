@@ -1,4 +1,3 @@
-import axios from "axios";
 import cheerio from "cheerio";
 import { todayDataType } from "../../../../Types/types";
 import { setToday, getToday, deleteToday } from "../../Storage";
@@ -23,15 +22,15 @@ export class Today {
     return false;
   };
 
-  public scrapToday = async (search: string): Promise<void> => {
-    let data: todayDataType = this.getData(search)
-    if (data && this.isFreshData(data)) {
-      this._data_by_location = data;
+  public scrapToday = async (
+    search: string,
+    rootPage: Promise<any>
+  ): Promise<void> => {
+    let todayData: todayDataType = getToday(search);
+    if (todayData && this.isFreshData(todayData)) {
+      this._data_by_location = todayData;
     } else {
-      let response = await axios
-        .get(`https://www.accuweather.com/en/search-locations?query=${search}`)
-        .then((prom) => prom.data)
-        .then((results) => results);
+      let response = await rootPage.then((results) => results);
 
       let $ = cheerio.load(response);
       var that = this;

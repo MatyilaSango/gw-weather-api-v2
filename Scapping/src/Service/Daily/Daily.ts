@@ -15,8 +15,6 @@ import DailyModel from "../../Models/Daily";
 export class Daily {
   private _dailyData: dailyDataType = new DailyModel().model;
 
-  private _NUMBEROFDAYS = 12;
-
   constructor() {}
 
   public formatDateNow = (day: string): String => {
@@ -31,7 +29,7 @@ export class Daily {
 
   public isFreshData = (data: dailyDataType, day: string): boolean => {
     if (data) {
-      let date: Date = new Date();
+      //let date: Date = new Date();
       let date_now: String = this.formatDateNow(day);
       if (date_now !== data.date) {
         deleteDaily(data.search_parameter, day);
@@ -45,22 +43,20 @@ export class Daily {
 
   public scrapDaily = async (
     search: string,
-    day: string | any
+    day: string | any,
+    rootPage: Promise<any>
   ): Promise<void> => {
-    let data: dailyDataType = this.getData(search, day)
-    if (this.isFreshData(data, day)) {
-      this._dailyData = data;
+    let dailyData: dailyDataType = getDaily(search, day);
+    if (this.isFreshData(dailyData, day)) {
+      this._dailyData = dailyData;
     } else {
-      let hourlyLink = await axios
-        .get(`https://www.accuweather.com/en/search-locations?query=${search}`)
-        .then((prom) => prom.data)
-        .then((results) => {
-          let $ = cheerio.load(results);
-          return (
-            "https://www.accuweather.com" +
-            $(".subnav-item").toArray()[2].attribs.href
-          );
-        });
+      let hourlyLink = await rootPage.then((results) => {
+        let $ = cheerio.load(results);
+        return (
+          "https://www.accuweather.com" +
+          $(".subnav-item").toArray()[2].attribs.href
+        );
+      });
 
       let hourlyresponse = await axios
         .get(hourlyLink + `?day=${day}`)
@@ -68,14 +64,26 @@ export class Daily {
         .then((results) => results);
 
       var that = this;
-
       let tempDayNightList: dataType[] = [];
-
       let $ = cheerio.load(hourlyresponse);
 
       //Scrapping the day and night data.
       $(".half-day-card").each(function (this: any) {
-        let tempDayNightData: dataType = new DailyModel().model.data.day_night.day;
+        let tempDayNightData: dataType = {
+          title: "",
+          temperature: "",
+          real_feel: "",
+          real_feel_shade: "",
+          phrase: "",
+          max_uv_index: "",
+          wind: "",
+          wind_gusts: "",
+          prob_of_precip: "",
+          prob_of_thunderstorm: "",
+          precip: "",
+          cloud_cover: "",
+          icon: "",
+        };
 
         tempDayNightData.title = $(this).find(".title").text().trim();
         tempDayNightData.temperature = String(
@@ -153,7 +161,6 @@ export class Daily {
             continue;
           }
         }
-
         tempDayNightList.push(tempDayNightData);
       });
 
@@ -176,7 +183,6 @@ export class Daily {
             rise: "",
             set: "",
           };
-
           let durationList: string[] = String(
             $(this)
               .find(".spaced-content:nth-child(1)")
@@ -198,7 +204,6 @@ export class Daily {
             .find(".text-value:nth-child(2)")
             .text()
             .trim();
-
           tempRiseSetList.push(tempRiseSetData);
         });
 
@@ -220,7 +225,6 @@ export class Daily {
             high: "",
             low: "",
           };
-
           tempHighLowData.high = $(this)
             .find(".temperature:nth-child(2)")
             .text()
@@ -229,7 +233,6 @@ export class Daily {
             .find(".temperature:nth-child(3)")
             .text()
             .trim();
-
           tempHighLowList.push(tempHighLowData);
         });
 
@@ -244,7 +247,6 @@ export class Daily {
       this._dailyData.data.day_night = day_night_data;
       this._dailyData.data.sunrise_sunset = sunrise_sunset_data;
       this._dailyData.data.temperature_history = TemperatureHistory;
-
       this._dailyData.search_parameter = search;
       setDaily(this._dailyData);
     }
