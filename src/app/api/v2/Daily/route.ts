@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import dailyHandler from "../../../../../Scapping/src/Controller/Daily/Daily";
 import { dailyDataType } from "../../../../../Types/types";
 import getRootHTMLPage from "../../../../../Scapping/src/Addon/RootPage/RootPage";
+import { Data } from "../../../../../enums/enum";
 
 export async function POST(req: NextRequest) {
   const { parameter, day } = await req.json();
