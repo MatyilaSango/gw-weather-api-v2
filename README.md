@@ -10,23 +10,81 @@ Confirms that the api is running.
 
 Locations data <br>
 End point: ```/api/v2/Locations``` <br>
-Body: ```{ "parameter": "Your location" }``` <br>
+Body: 
+```
+{
+    "city": "Cape Town"
+}
+``` 
+<br>
+
+## 
+You can get the goe for the following endpoints using the Locations endpoint.
 ##
 
 Today's data. <br>
 End point: ```/api/v2/Today``` <br>
-Body: ```{ "parameter": "Your location" }``` <br>
+Body: 
+```
+{
+    "city": "Cape Town",
+    "geo": {
+        "long": "18.543",
+        "lat": "-33.915"
+    }
+}
+``` 
+<br>
+
 ##
 
 Hourly data for the next 10 hours max <br>
 End point: ```/api/v2/Hourly``` <br>
-Body: ```{ "parameter": "Your location" }``` <br>
+Body: 
+```
+{
+    "city": "Cape Town",
+    "geo": {
+        "long": "18.543",
+        "lat": "-33.915"
+    }
+}
+``` 
+<br>
+
 ##
 
 Daily Weather data <br>
 End point: ```/api/v2/Daily``` <br>
-Body: ```{ "parameter": "Your location", "day": 0 }``` <br>
+Body: 
+```
+{
+    "city": "Cape Town",
+    "geo": {
+        "long": "18.543",
+        "lat": "-33.915"
+    },
+    "day": "0"
+}
+``` 
+<br>
 0 - being the current day, 1 - being the next day after today, etc,
+
+##
+
+Monthly data <br>
+End point: ```/api/v2/Monthly``` <br>
+Body: 
+```
+{
+    "city": "Cape Town",
+    "geo": {
+        "long": "18.543",
+        "lat": "-33.915"
+    }
+}
+``` 
+<br>
 
 ## Deployed on vercel
 Link to the api: ['to be added']()
