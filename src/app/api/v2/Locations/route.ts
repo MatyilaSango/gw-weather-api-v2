@@ -5,7 +5,6 @@ import locationsHandler from "../../../../../Scapping/src/Controller/Location/Lo
 
 export async function POST(req: NextRequest) {
   const { city } = await req.json();
-  console.log(city)
   let res: locationsType = (await locationsHandler(city))
   if (res) return NextResponse.json(res);
   return NextResponse.json({ error: Data.NOT_FOUND });
