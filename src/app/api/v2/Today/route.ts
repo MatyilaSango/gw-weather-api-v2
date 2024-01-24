@@ -5,9 +5,9 @@ import { todayDataType } from "../../../../../Types/types";
 import getRootHTMLPage from "../../../../../Scapping/src/Addon/RootPage/RootPage";
 
 export async function POST(req: NextRequest) {
-  const { parameter } = await req.json();
-  const _rootPage = getRootHTMLPage(parameter)
-  let today: todayDataType = (await todayHandler(parameter, _rootPage)) as todayDataType;
+  const { city, geo } = await req.json();
+  const _rootPage = getRootHTMLPage(city, geo)
+  let today: todayDataType = (await todayHandler(city, _rootPage)) as todayDataType;
   if (today) return NextResponse.json(today);
   return NextResponse.json({ error: Data.NOT_FOUND });
 }

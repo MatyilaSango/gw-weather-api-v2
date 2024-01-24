@@ -7,7 +7,7 @@ export class Today {
   private _data_by_location: todayDataType = new TodayModel().model;
   constructor() {}
 
-  public isFreshData = (data: todayDataType): boolean => {
+  private isFreshData = (data: todayDataType): boolean => {
     if (data) {
       let date_now: Date = new Date();
       var data_time = new Date(data.data.date.getTime());
@@ -44,7 +44,6 @@ export class Today {
         .text()
         .trim();
       this._data_by_location.data.type = $(".cur-con-weather-card")
-        .find(".spaced-content")
         .find(".phrase")
         .text();
 
@@ -53,7 +52,6 @@ export class Today {
         <string>$(".cur-con-weather-card").find(".weather-icon").data("src");
 
       $(".cur-con-weather-card")
-        .find(".details-container")
         .find(".spaced-content")
         .each(function (this: any) {
           switch ($(this).find(".label").text()) {
@@ -61,23 +59,27 @@ export class Today {
               that._data_by_location.data.real_feel = $(this)
                 .find(".value")
                 .text();
+              break;
 
-            case "air Quality":
+            case "Air Quality":
               that._data_by_location.data.air_quality = $(this)
                 .find(".value")
                 .text();
+              break;
 
             case "Wind":
               that._data_by_location.data.wind = $(this).find(".value").text();
+              break;
 
             case "Wind Gusts":
               that._data_by_location.data.wind_gusts = $(this)
                 .find(".value")
                 .text();
+              break;
           }
         });
       this._data_by_location.search_parameter = search;
-      this._data_by_location.data.offset = `${
+      this._data_by_location.data.offset.hours = `${
         this._data_by_location.data.time.includes("PM")
           ? Number(this._data_by_location.data.time.split(":")[0]) +
             12 -
@@ -85,6 +87,11 @@ export class Today {
           : Number(this._data_by_location.data.time.split(":")[0]) -
             new Date().getUTCHours()
       }`;
+      this._data_by_location.data.offset.minutes = `${
+        Number(this._data_by_location.data.time.split(":")[1]?.split(" ")[0]) -
+        new Date().getUTCMinutes()
+      }
+      `;
       setToday(this._data_by_location);
     }
   };
