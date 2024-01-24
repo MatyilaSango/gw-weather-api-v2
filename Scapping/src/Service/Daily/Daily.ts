@@ -56,10 +56,7 @@ export class Daily {
         );
       });
 
-      let hourlyresponse = await axios
-        .get(hourlyLink + `?day=${day}`)
-        .then((prom) => prom.data)
-        .then((results) => results);
+      let hourlyresponse = await (await fetch(hourlyLink + `?day=${day}`)).text()
 
       var that = this;
       let tempDayNightList: dataType[] = [];

@@ -41,10 +41,7 @@ export class Hourly {
         );
       });
 
-      let hourlyresponse = await axios
-        .get(hourlyLink)
-        .then((prom) => prom.data)
-        .then((results) => results);
+      let hourlyresponse = await (await fetch(hourlyLink)).text()
 
       var that = this;
       let $ = cheerio.load(hourlyresponse);
