@@ -5,10 +5,10 @@ import getRootHTMLPage from "../../../../../Scapping/src/Addon/RootPage/RootPage
 import { Data } from "../../../../../enums/enum";
 
 export async function POST(req: NextRequest) {
-  const { parameter, day } = await req.json();
-  const _rootPage = getRootHTMLPage(parameter)
+  const { city, geo, day } = await req.json();
+  const _rootPage = getRootHTMLPage(city, geo)
   let daily: dailyDataType = (await dailyHandler(
-    parameter,
+    city,
     day,
     _rootPage
   )) as dailyDataType;
